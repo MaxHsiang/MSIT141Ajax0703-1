@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@section Styles{
+    <style>
+        h1 {
+            background-color: gray
+        }
+
+        table, td, tr {
+            align-content: center;
+            border-radius: 5px;
+            margin: 50px auto;
+            padding:20px;
+            font-size: 30px;
+            font-family:Consolas;
+        }
+        marquee{
+            font-size:30px;
+            font-family:Consolas;
+        }
+    </style>
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <button class="btn btn-primary mb-2" type="button" id="buttonClick">Cilck to Json Table</button>
+    <br />
+    <marquee  width="500px"  irection="left" scrollamount="10" >Welcome to Ajax</marquee>
+    <table id="tb" class="td table table-striped-columns">
+    </table>
+</div>
+
+@section Scripts{
+    <script>
+        $("#buttonClick").on("click", function () {
+            var emp = {
+                "employees": [
+                    { "name": "Tom", "workYears": 3, "salary": 35000 },
+                    { "name": "Jack", "workYears": 5, "salary": 40000 },
+                    { "name": "Mary", "workYears": 7, "salary": 45000 }]
+            };
+            let td = "";
+            let emps = emp.employees;
+            let array = Object.keys(emps[0])
+            td = `<tr><td>${array[0]}</td>
+                          <td>${array[1]}</td>
+                          <td>${array[2]}</td></tr>`
+            for (let i = 0, max = emp.employees.length; i < max; i++) {
+                td += `<tr><td>${emps[i].name}</td>
+                               <td>${emps[i].workYears}</td>
+                               <td>${emps[i].salary}</td></tr>`
+            }
+            $(".td").append(td);
+        });
+    </script>
+}
