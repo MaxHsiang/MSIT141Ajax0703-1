@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "AjaxPost";
+}
+
+<h1>AjaxPost</h1>
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <form method="post" enctype="application/x-www-form-urlencoded" action="~/Api/index">
+            <div class="form-group">
+                <label for="InputName">姓名</label>
+                <input type="text" class="form-control" id="InputName">
+            </div>
+            <div class="form-group">
+                <label for="InputEmail">電子郵件</label>
+                <input type="text" class="form-control" id="InputEmail">
+            </div>
+            <div class="form-group">
+                <label for="InputEmail">年紀</label>
+                <input type="number" class="form-control" id="InputAge">
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+        <div  class="alert alert-info" id="div1"></div>
+    </div>
+    <div class="col-3"></div>
+</div>
+
+@section Scripts{ 
+    <script>
+        var btnSubmit = document.querySelector(".btn");
+        var txtName = document.querySelector("#InputName");
+        var txtEmail = document.querySelector("#InputEmail");
+        var txtAge = document.querySelector("#InputAge");
+        var divInfo = document.querySelector("#div1");
+
+
+
+        btnSubmit.addEventListener("click", (evt) => {
+                evt.preventDefault(); //停止預設行為 submit link
+                const xhr = new XMLHttpRequest();
+                xhr.addEventListener('load', () => {
+                console.log('load');
+                const data = xhr.responseText;
+                divInfo.innerHTML = `<h1>${data}</h1>`;
+                })
+
+            const params = `name=${txtName.value}&email=${txtEmail.value}&age=${txtAge.value}`;
+            xhr.open('POST', '@Url.Content("~/api/index")');
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.send(params);
+        })
+
+
+
+
+    </script>
+
+}

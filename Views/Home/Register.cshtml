@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+<form method="post" name="userInfo">
+    <div class="form-group">
+        <label for="Inputname">姓名</label>
+        <input type="text" class="form-control" id="Inputname" name="name" placeholder="請輸入姓名">
+        <small id="NameCheck" class="form-text text-muted"></small>
+    </div>
+    <div class="form-group">
+        <label for="InputEmail">電子信箱</label>
+        <input type="email" class="form-control" id="Inputemail" name="email">
+    </div>
+    <div class="form-group">
+        <label for="Inputage">年紀</label>
+        <input type="text" class="form-control" id="Inputage" name="age">
+    </div>
+    <button type="button" class="btn btn-primary">驗證</button>
+</form>
+<div class="alert alert-info" id="div1"></div>
+
+@section Scripts
+{
+
+<script>
+    const txtName = document.querySelector('#Inputname');
+    const btnSubmit = document.querySelector('.btn');
+    const divInfo = document.querySelector('#NameCheck');
+    txtName.addEventListener('blur', () => {
+        //const xhr = new XMLHttpRequest();
+        //const formData = new FormData(document.userInfo);
+        //const data = xhr.responseText;
+        //divInfo.innerHTML = `<h3>${data}</h3>`
+        const formData = new FormData(document.userInfo);
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', () => {
+            const data = xhr.responseText;
+            divInfo.innerHTML = `<h3>${data}</h3>`;
+        })
+        xhr.open('POST', '@Url.Content("~/api/index")');
+        xhr.send(formData);
+    })
+    btnSubmit.addEventListener('click', (evt) => {
+        evt.preventDefault();
+    });
+</script>
+
+
+
+}

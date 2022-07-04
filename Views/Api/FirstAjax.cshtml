@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewData["Title"] = "FirstAjax";
+}
+
+<h1>FirstAjax</h1>
+<button type="button" id="btnStart" class="btn-primary">Ajax Start</button>
+<button type="button" id="btnStop" class="btn-primary">Ajax Stop</button>
+<div id="div1" class="alert-dark"></div>
+<input type="text" id="txt1"  placeholder="請輸入姓名" /><input type="text" id="txt2"  placeholder="請輸入年齡" />
+
+@section Scripts{ 
+    <script>
+
+    const btnStart = document.querySelector("#btnStart");
+        const divInfo = document.querySelector("#div1");
+
+        const xhr = new XMLHttpRequest();
+
+        btnStop.addEventListener("click", () => {
+            xhr.abort();
+        })
+        btnStart.addEventListener("click", () => {
+
+
+            xhr.addEventListener('load', () => {
+
+                    var data = xhr.responseText;
+
+                    divInfo.innerHTML = `<h1>${data}</h1>`;
+                })
+            xhr.addEventListener('loadstart', () => {
+                console.log('loadstart');
+                btnStart.textContent = "Loading...";
+                btnStart.setAttribute('disabled', 'disabled');
+            })
+            xhr.addEventListener('loadend', () => {
+                console.log('loadend');
+                btnStart.removeAttribute('disabled');
+                btnStart.textContent = "Ajax Start";
+            })
+            xhr.addEventListener('timeout', () => {
+                console.log('timeout');
+                divInfo.innerHTML = "<h3>伺服器忙碌中請稍後再來</h3>"
+            })
+            xhr.addEventListener('abort', () => {
+                console.log('abort');
+                divInfo.innerHTML = "<h3>您終止了程式的執行</h3>"
+            })
+
+      
+
+        const url = "@Url.Content("~/Api/index")";
+        const params = `?name=${$('#txt1').val()}&age=${$('#txt2').val()}`;
+        //xhr.open("GET", `/Api/index?name=${$('#txt1').val()}&age=${$('#txt2').val()}`);
+            xhr.open("GET", url + params);
+            xhr.timeout = 3000;
+            xhr.send();
+
+    })
+
+    </script>
+    
+
+}
