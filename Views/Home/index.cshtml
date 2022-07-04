@@ -47,15 +47,12 @@
             let td = "";
             let emps = emp.employees;
             let array = Object.keys(emps[0])
-            td = `<tr><td>${array[0]}</td>
-                          <td>${array[1]}</td>
-                          <td>${array[2]}</td></tr>`
+            td = `<tr><td>${array[0]}</td><td>${array[1]}</td><td>${array[2]}</td></tr>`
             for (let i = 0, max = emp.employees.length; i < max; i++) {
-                td += `<tr><td>${emps[i].name}</td>
-                               <td>${emps[i].workYears}</td>
-                               <td>${emps[i].salary}</td></tr>`
+                td += `<tr><td>${emps[i].name}</td><td>${emps[i].workYears}</td><td>${emps[i].salary}</td></tr>`
             }
-            $(".td").append(td);
+            $(".td").html(td);
         });
+
     </script>
 }
